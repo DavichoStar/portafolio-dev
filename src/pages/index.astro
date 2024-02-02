@@ -4,6 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import CVIcon from "@/components/icons/CV.astro";
 import GitHubIcon from "@/components/icons/GitHub.astro";
 import LinkedInIcon from "@/components/icons/LinkedIn.astro";
+import Projects from "@/components/Projects.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
 import SocialPill from "@/components/SocialPill.astro";
 import Timeline from "@/components/Timeline.astro";
@@ -16,15 +17,17 @@ import Timeline from "@/components/Timeline.astro";
     <main class='px-4'>
         <!-- [ Descripción ] -->
         <SectionContainer class='pb-14 lg:pt-44 lg:pb-44'>
-            <h1 class='text-gradient'>¡Hola! 👋 Soy <strong>Erick</strong></h1>
-            <p class='text-gray-900 dark:text-white'>
-                Desarrollador móvil (React Native - Flutter) y web (React) de la <span
-                    class='text-green-700/90 dark:text-green-200/90'>Ciudad de México</span
+            <h1 class='text-gradient text-4xl text-center mb-4 font-semibold rounded-full py-1'>
+                {">"} ¡Hola! 👋 Soy <strong>Erick</strong>
+            </h1>
+            <p class='text-gray-900 dark:text-white text-balance text-center'>
+                Desarrollador Front-End: Móvil (React Native - Flutter) y Web (React) de la <span
+                    class='text-green-700/90 dark:text-green-300/90'>Zona Metropolitana del Valle de México</span
                 > con más de 3 años de experiencia.
             </p>
 
             <!-- [ Redes Sociales ] -->
-            <nav class='flex gap-4 mt-8 flex-wrap'>
+            <nav class='flex flex-wrap gap-4 mt-4 justify-center'>
                 <SocialPill href='https://www.github.com/DavichoStar'>
                     <GitHubIcon class='size-4 md:size-6' />GitHub
                 </SocialPill>
@@ -41,64 +44,22 @@ import Timeline from "@/components/Timeline.astro";
         <SectionContainer id='experience'>
             <Timeline />
         </SectionContainer>
+
+        <!-- [ Proyectos ] -->
+        <SectionContainer id='projects'>
+            <Projects />
+        </SectionContainer>
     </main>
 
     <style>
         main {
             margin: auto;
             padding: 1rem;
-            width: 800px;
-            max-width: calc(100% - 2rem);
-            color: white;
-            font-size: 20px;
-            line-height: 1.6;
-        }
-        .astro-a {
-            position: absolute;
-            top: -32px;
-            left: 50%;
-            transform: translatex(-50%);
-            width: 220px;
-            height: auto;
-            z-index: -1;
-        }
-        h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            line-height: 1;
-            text-align: center;
-            margin-bottom: 1em;
         }
         .text-gradient {
             background-image: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-size: 400%;
             background-position: 0%;
-        }
-        .instructions {
-            margin-bottom: 2rem;
-            border: 1px solid rgba(var(--accent-light), 25%);
-            background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-            padding: 1.5rem;
-            border-radius: 8px;
-        }
-        .instructions code {
-            font-size: 0.8em;
-            font-weight: bold;
-            background: rgba(var(--accent-light), 12%);
-            color: rgb(var(--accent-light));
-            border-radius: 4px;
-            padding: 0.3em 0.4em;
-        }
-        .instructions strong {
-            color: rgb(var(--accent-light));
-        }
-        .link-card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-            gap: 2rem;
-            padding: 0;
         }
     </style>
 </Layout>

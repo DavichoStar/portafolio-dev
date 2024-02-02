@@ -1,0 +1,146 @@
+---
+import CodeIcon from "@/components/icons/Code.astro";
+import GitHub from "@/components/icons/GitHub.astro";
+import Link from "@/components/icons/Link.astro";
+import LinkButton from "@/components/LinkButton.astro";
+import Tailwind from "@/components/icons/Tailwind.astro";
+import React from "@/components/icons/React.astro";
+import Micronaut from "@/components/icons/Micronaut.astro";
+import AWS from "@/components/icons/AWS.astro";
+
+interface Tag {
+    // Nombre de la etiqueta
+    name: string;
+    // Clase de color de la etiqueta
+    class: string;
+    // Clase de color del icono
+    classIcon?: string;
+    // Icono de la etiqueta
+    icon: any;
+}
+
+interface Project {
+    // Título del proyecto
+    title: string;
+    // Descripción del proyecto
+    description: string;
+    // Este proyecto fue desarrollado en: (Nombre del Trabajo, Freelance, Personal, etc)
+    work?: string;
+    // Id del trabajo para enlazar con la sección de experiencia
+    workId?: string;
+    // Enlace al proyecto
+    link?: string;
+    // Enlace al repositorio del proyecto
+    github?: string;
+    // Imagen del proyecto
+    image: string;
+    // Etiquetas de tecnologías utilizadas
+    tags: Tag[];
+}
+
+const TAGS = {
+    AWS: {
+        name: "AWS",
+        class: "bg-[#F90] text-white",
+        icon: AWS,
+    },
+    TAILWIND: {
+        name: "Tailwind CSS",
+        class: "bg-[#003159] text-white",
+        icon: Tailwind,
+    },
+    REACT: {
+        name: "React",
+        class: "bg-[#227086] text-white",
+        classIcon: "text-[#00D8FF]",
+        icon: React,
+    },
+    REACT_NATIVE: {
+        name: "React Native",
+        class: "bg-[#227086] text-white",
+        classIcon: "text-[#61DAFB]",
+        icon: React,
+    },
+    MICRONAUT: {
+        name: "Micronaut",
+        class: "bg-[#000] text-white",
+        icon: Micronaut,
+    },
+};
+
+const PROJECTS: Project[] = [
+    {
+        title: "TrackCash App",
+        description:
+            "Aplicación móvil para la administración y control de las bolsas de valores utilizadas en los vuelos, la cual te permite registrar bolsas.",
+        work: "IDEO Software",
+        workId: "ideo",
+        link: "https://play.google.com/store/apps/details?id=com.ideosoftware.trackcash",
+        image: "/projects/trackcash.webp",
+        tags: [TAGS.REACT_NATIVE, TAGS.MICRONAUT, TAGS.AWS],
+    },
+];
+---
+
+<h2 class='text-2xl font-semibold flex gap-x-3 mb-2 items-center text-gray-900 dark:text-white'>
+    <CodeIcon class='size-4 md:size-6' />
+    Proyectos
+</h2>
+
+<div class='grid gap-4 mt-4'>
+    {
+        PROJECTS.map((project) => (
+            <article class='flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0'>
+                <div class='w-full md:w-1/2'>
+                    <div class='relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50'>
+                        <img
+                            alt=''
+                            src={project.image}
+                            alt={project.title}
+                            class='object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105'
+                            loading='lazy'
+                        />
+                    </div>
+                </div>
+                <div class='w-full md:w-1/2 md:max-w-lg'>
+                    <h3 class='text-2xl font-bold text-gray-800 dark:text-gray-100'>{project.title}</h3>
+
+                    {project.work && (
+                        <a class='flex flex-wrap mt-2' href={`/#${project.workId}`}>
+                            <span class='text-sm px-3 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200'>
+                                {project.work}
+                            </span>
+                        </a>
+                    )}
+
+                    <div class='mt-2 text-gray-700 dark:text-gray-400'>{project.description}</div>
+
+                    <div class='flex flex-wrap mt-2'>
+                        <ul class='flex flex-row mb-2 gap-x-2'>
+                            {project.tags.map((tag) => (
+                                <span class={`px-2 py-1 rounded-full ${tag.class} flex gap-1 items-center`}>
+                                    <tag.icon class={`size-4 ${tag.classIcon}`} />
+                                    <span class='text-sm'>{tag.name}</span>
+                                </span>
+                            ))}
+                        </ul>
+                    </div>
+                    <footer class='flex items-end justify-start mt-4 gap-x-4'>
+                        {project.github && (
+                            <LinkButton href={project.github}>
+                                <GitHub class='size-6' />
+                                Code
+                            </LinkButton>
+                        )}
+                        {project.link && (
+                            <LinkButton href={project.link}>
+                                <Link class='size-4' />
+                                Preview
+                            </LinkButton>
+                        )}
+                    </footer>
+                </div>
+            </article>
+        ))
+    }
+</div>

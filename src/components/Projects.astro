@@ -7,6 +7,17 @@ import Tailwind from "@/components/icons/Tailwind.astro";
 import React from "@/components/icons/React.astro";
 import Micronaut from "@/components/icons/Micronaut.astro";
 import AWS from "@/components/icons/AWS.astro";
+import Vercel from "./icons/Vercel.astro";
+import Flutter from "./icons/Flutter.astro";
+import NestJS from "./icons/NestJS.astro";
+import MariaDB from "./icons/MariaDB.astro";
+import MongoDB from "./icons/MongoDB.astro";
+import SQLite from "./icons/SQLite.astro";
+import Sentry from "./icons/Sentry.astro";
+import Firebase from "./icons/Firebase.astro";
+import GraphQL from "./icons/GraphQL.astro";
+import Figma from "./icons/Figma.astro";
+import Stripe from "./icons/Stripe.astro";
 
 interface Tag {
     // Nombre de la etiqueta
@@ -41,7 +52,7 @@ interface Project {
 const TAGS = {
     AWS: {
         name: "AWS",
-        class: "bg-[#F90] text-white",
+        class: "bg-[#232F3E] text-white",
         icon: AWS,
     },
     TAILWIND: {
@@ -66,6 +77,61 @@ const TAGS = {
         class: "bg-[#000] text-white",
         icon: Micronaut,
     },
+    VERCEL: {
+        name: "Vercel",
+        class: "bg-[#000] text-white",
+        icon: Vercel,
+    },
+    FLUTTER: {
+        name: "Flutter",
+        class: "bg-[#002C52] text-white",
+        icon: Flutter,
+    },
+    GRAPHQL: {
+        name: "GraphQL",
+        class: "bg-[#E535AB] text-white",
+        icon: GraphQL,
+    },
+    NESTJS: {
+        name: "NestJS",
+        class: "bg-[#661226] text-white",
+        icon: NestJS,
+    },
+    FIREBASE: {
+        name: "Firebase",
+        class: "bg-[#775C08] text-white",
+        icon: Firebase,
+    },
+    SENTRY: {
+        name: "Sentry",
+        class: "bg-[#362D59] text-white",
+        icon: Sentry,
+    },
+    FIGMA: {
+        name: "Figma",
+        class: "bg-[#5C1E0B] text-white",
+        icon: Figma,
+    },
+    MARIA_DB: {
+        name: "MariaDB",
+        class: "bg-[#003545] text-white",
+        icon: MariaDB,
+    },
+    MONGODB: {
+        name: "MongoDB",
+        class: "bg-[#13AA52] text-white",
+        icon: MongoDB,
+    },
+    SQLITE: {
+        name: "SQLite",
+        class: "bg-[#003B57] text-white",
+        icon: SQLite,
+    },
+    STRIPE: {
+        name: "Stripe",
+        class: "bg-[#6772E5] text-white",
+        icon: Stripe,
+    },
 };
 
 const PROJECTS: Project[] = [
@@ -77,7 +143,33 @@ const PROJECTS: Project[] = [
         workId: "ideo",
         link: "https://play.google.com/store/apps/details?id=com.ideosoftware.trackcash",
         image: "/projects/trackcash.webp",
-        tags: [TAGS.REACT_NATIVE, TAGS.MICRONAUT, TAGS.AWS],
+        tags: [TAGS.REACT_NATIVE, TAGS.SQLITE, TAGS.FIREBASE, TAGS.SENTRY, TAGS.MICRONAUT, TAGS.AWS],
+    },
+    {
+        title: "TrackCash Web",
+        description:
+            "Aplicación web para la administración de la información registrada en la aplicación móvil TrackCash, la cual te permite visualizar, editar, filtrar y exportar la información.",
+        work: "IDEO Software",
+        workId: "ideo",
+        image: "/projects/trackcash-web.webp",
+        tags: [TAGS.REACT, TAGS.SENTRY, TAGS.MICRONAUT, TAGS.MARIA_DB, TAGS.AWS],
+    },
+    {
+        title: "Casa-U App",
+        description: "Aplicación móvil estilo AirBnB",
+        work: "Freelance",
+        image: "/projects/casau-app.webp",
+        tags: [TAGS.FLUTTER, TAGS.STRIPE, TAGS.NESTJS, TAGS.MARIA_DB, TAGS.FIGMA],
+    },
+    {
+        title: "Starlight Economy Web",
+        description:
+            "Página web del bot de Discord Starlight Economy, la cual te permite visualizar la información de los usuarios, servidores y comandos, además de poder invitar al bot a tu servidor y configurar el bot dentro de tu servidor.",
+        work: "Personal",
+        link: "https://starlight-economy.vercel.app/",
+        github: "https://github.com/StarArmyDev/sl-economy-web",
+        image: "/projects/sl-economy-web.webp",
+        tags: [TAGS.REACT, TAGS.MONGODB, TAGS.GRAPHQL, TAGS.VERCEL],
     },
 ];
 ---
@@ -105,22 +197,29 @@ const PROJECTS: Project[] = [
                 <div class='w-full md:w-1/2 md:max-w-lg'>
                     <h3 class='text-2xl font-bold text-gray-800 dark:text-gray-100'>{project.title}</h3>
 
-                    {project.work && (
-                        <a class='flex flex-wrap mt-2' href={`/#${project.workId}`}>
+                    {project.work &&
+                        (project.workId?.length ? (
+                            <a class='flex flex-wrap mt-2' href={`/#${project.workId}`}>
+                                <span class='text-sm px-3 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200'>
+                                    {project.work}
+                                </span>
+                            </a>
+                        ) : (
                             <span class='text-sm px-3 py-1 rounded-full bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-200'>
                                 {project.work}
                             </span>
-                        </a>
-                    )}
+                        ))}
 
                     <div class='mt-2 text-gray-700 dark:text-gray-400'>{project.description}</div>
 
                     <div class='flex flex-wrap mt-2'>
-                        <ul class='flex flex-row mb-2 gap-x-2'>
+                        <ul class='flex flex-row mb-2 gap-x-2 flex-wrap'>
                             {project.tags.map((tag) => (
-                                <span class={`px-2 py-1 rounded-full ${tag.class} flex gap-1 items-center`}>
+                                <span
+                                    class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2 items-center my-1`}
+                                >
                                     <tag.icon class={`size-4 ${tag.classIcon}`} />
-                                    <span class='text-sm'>{tag.name}</span>
+                                    {tag.name}
                                 </span>
                             ))}
                         </ul>

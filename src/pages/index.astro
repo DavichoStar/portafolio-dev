@@ -8,6 +8,7 @@ import Projects from "@/components/Projects.astro";
 import SectionContainer from "@/components/SectionContainer.astro";
 import SocialPill from "@/components/SocialPill.astro";
 import Timeline from "@/components/Timeline.astro";
+import AboutMe from "@/components/AboutMe.astro";
 ---
 
 <Layout
@@ -17,17 +18,21 @@ import Timeline from "@/components/Timeline.astro";
     <main class='px-4'>
         <!-- [ Descripción ] -->
         <SectionContainer class='pb-14 lg:pt-44 lg:pb-44'>
-            <h1 class='text-gradient text-4xl text-center mb-4 font-semibold rounded-full py-1'>
-                {">"} ¡Hola! 👋 Soy <strong>Erick</strong>
-            </h1>
-            <p class='text-gray-900 dark:text-white text-balance text-center'>
-                Desarrollador Front-End: Móvil (React Native - Flutter) y Web (React) de la <span
-                    class='text-green-700/90 dark:text-green-300/90'>Zona Metropolitana del Valle de México</span
-                > con más de 3 años de experiencia.
-            </p>
+            <div class='flex justify-center'>
+                <h1 class='text-gradient text-4xl text-center mb-4 font-semibold rounded-full py-2 px-12'>
+                    {">"} ¡Hola! 👋 Soy <strong>Erick</strong>
+                </h1>
+            </div>
+            <div class='flex justify-center my-6'>
+                <p class='text-gray-900 dark:text-white text-balance text-center max-w-md'>
+                    Desarrollador Front-End: Móvil (React Native - Flutter) y Web (React) de la <span
+                        class='text-green-700/90 dark:text-green-300/90'>Zona Metropolitana del Valle de México</span
+                    >🇲🇽 con más de 3 años de experiencia.
+                </p>
+            </div>
 
             <!-- [ Redes Sociales ] -->
-            <nav class='flex flex-wrap gap-4 mt-4 justify-center'>
+            <nav class='flex flex-wrap gap-4 justify-center'>
                 <SocialPill href='https://www.github.com/DavichoStar'>
                     <GitHubIcon class='size-4 md:size-6' />GitHub
                 </SocialPill>
@@ -48,6 +53,11 @@ import Timeline from "@/components/Timeline.astro";
         <!-- [ Proyectos ] -->
         <SectionContainer id='projects'>
             <Projects />
+        </SectionContainer>
+
+        <!-- [ Acerca de mí ] -->
+        <SectionContainer id='about'>
+            <AboutMe />
         </SectionContainer>
     </main>
 

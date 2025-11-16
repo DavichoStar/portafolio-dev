@@ -20,14 +20,13 @@ const navItems = [
     {
         title: "Contacto",
         label: "contacto",
-        url: "mailto:erickdavidestrella@gmail.com",
+        url: "mailto:davichostar@protonmail.com",
     },
 ];
 ---
 
-<header class='h-14 flex justify-center items-center mx-auto pt-6 sticky top-0 w-full z-10'>
-    <nav class='flex items-center bg-[#E2E2E2] dark:bg-black rounded-full px-6 py-2'>
-        <a href='/'><Image src='/logo.webp' alt='photo' class='rounded-full' height='40' width='40' /></a>
+<header class='h-8 flex justify-center items-center mx-auto pt-6 sticky top-0 w-full z-10'>
+    <nav class='flex items-center bg-[#E2E2E2] dark:bg-black rounded-full px-2'>
         {
             navItems.map((link) => (
                 <a
@@ -40,8 +39,9 @@ const navItems = [
             ))
         }
         <button
+            id='theme-toggle'
             class='px-2 dark:hover:bg-white/10 hover:bg-black/10 rounded-full'
-            onclick='document.documentElement.classList.toggle("dark");'
+            aria-label='Toggle theme'
         >
             <svg width='28px' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>
                 <path
@@ -74,3 +74,23 @@ const navItems = [
         fill: white;
     }
 </style>
+
+<script>
+    // Función para cambiar el tema
+    const toggleTheme = () => {
+        const html = document.documentElement;
+        const isDark = html.classList.contains("dark");
+
+        if (isDark) {
+            html.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+        } else {
+            html.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+        }
+    };
+
+    // Agregar event listener al botón
+    const themeToggle = document.getElementById("theme-toggle");
+    themeToggle?.addEventListener("click", toggleTheme);
+</script>

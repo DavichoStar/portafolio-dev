@@ -2,69 +2,10 @@
 import TimelineItem from "./TimelineItem.astro";
 import BriefcaseIcon from "@/components/icons/Briefcase.astro";
 
-const EXPERIENCE = [
-    {
-        id: "ideo",
-        period: "Agosto 2022 - Actualidad",
-        title: "Desarrollador Móvil/Web/Backend",
-        subtitle: "IDEO Software",
-        description:
-            "Desarrollo de aplicaciones móviles en con React Native, Micronaut (Java) como backend y ReactJS y Grails como frontend para paneles de administración.",
-        badgs: [
-            "React Native",
-            "ReactJS",
-            "TypeScript",
-            "i18next",
-            "NodeJS",
-            "Telegram API",
-            "Micronaut",
-            "Grails",
-            "Java",
-            "JWT",
-            "MySQL",
-            "Flutter",
-            "Docker",
-            "Git",
-            "Bitbucket",
-            "Sentry",
-            "AWS S3",
-            "AWS EC2",
-            "AWS SNS",
-            "Firebase Remote Config",
-            "Firebase Analytics",
-            "Firebase In-App Messaging",
-        ],
-        link: "https://ideosoftware.com.mx/",
-    },
-    {
-        id: "casau",
-        period: "Abril 2021 - Junio 2022 (En pausa)",
-        title: "Desarrollador Flutter",
-        subtitle: "Freelance",
-        description:
-            "Desarrollo de aplicación móvil en Flutter para Android y iOS estilo Airbnb para público jóven de México.",
-        badgs: [
-            "Flutter",
-            "Dart",
-            "GetX",
-            "Google Maps",
-            "NestJS",
-            "JWT",
-            "TypeScript",
-            "NodeJS",
-            "MySQL",
-            "MongoDB",
-            "Firebase Authentication",
-            "Firebase Firestore",
-            "Firebase Storage",
-            "Firebase Analytics",
-            "Firebase Remote Config",
-            "Git",
-            "GitHub",
-            "Sentry",
-        ],
-    },
-];
+import { EXPERIENCE } from "@/data";
+import { DISPLAY_LIMITS } from "@/config/site";
+
+const LIMIT = DISPLAY_LIMITS.experience;
 ---
 
 <h2 class='text-2xl font-semibold flex gap-x-3 mb-2 items-center text-gray-900 dark:text-white'>
@@ -72,7 +13,7 @@ const EXPERIENCE = [
     Experiencia Laboral
 </h2>
 
-<ol class='relative border-s border-gray-400 dark:border-gray-700 ml-3'>
+<ol class='relative border-s border-gray-400 dark:border-gray-700 ml-3' id='timeline-list'>
     {
         EXPERIENCE.map((it, i) => (
             <TimelineItem
@@ -80,9 +21,11 @@ const EXPERIENCE = [
                 period={it.period}
                 title={it.title}
                 subtitle={it.subtitle}
+                descriptionShort={it.descriptionShort}
                 description={it.description}
                 isLastest={i === 0}
                 badgs={it.badgs}
+                isHidden={i >= LIMIT}
             >
                 {it.link && (
                     <a
@@ -112,3 +55,28 @@ const EXPERIENCE = [
         ))
     }
 </ol>
+
+{
+    EXPERIENCE.length > LIMIT && (
+        <button
+            id='show-more-experience'
+            class='mt-6 w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700'
+        >
+            Ver más experiencias
+        </button>
+    )
+}
+
+<script>
+    const showMoreBtn = document.getElementById("show-more-experience");
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener("click", () => {
+            const hiddenItems = document.querySelectorAll('[data-hidden="true"]');
+            hiddenItems.forEach((item) => {
+                item.removeAttribute("data-hidden");
+                item.classList.remove("hidden");
+            });
+            showMoreBtn.style.display = "none";
+        });
+    }
+</script>

@@ -1,177 +1,18 @@
 ---
+import { Image } from "astro:assets";
+
 import CodeIcon from "@/components/icons/Code.astro";
 import GitHub from "@/components/icons/GitHub.astro";
 import Link from "@/components/icons/Link.astro";
 import LinkButton from "@/components/LinkButton.astro";
-import Tailwind from "@/components/icons/Tailwind.astro";
-import React from "@/components/icons/React.astro";
-import Micronaut from "@/components/icons/Micronaut.astro";
-import AWS from "@/components/icons/AWS.astro";
-import Vercel from "./icons/Vercel.astro";
-import Flutter from "./icons/Flutter.astro";
-import NestJS from "./icons/NestJS.astro";
-import MariaDB from "./icons/MariaDB.astro";
-import MongoDB from "./icons/MongoDB.astro";
-import SQLite from "./icons/SQLite.astro";
-import Sentry from "./icons/Sentry.astro";
-import Firebase from "./icons/Firebase.astro";
-import GraphQL from "./icons/GraphQL.astro";
-import Figma from "./icons/Figma.astro";
-import Stripe from "./icons/Stripe.astro";
+import PlayStore from "@/components/icons/PlayStore.astro";
+import AppStore from "@/components/icons/AppStore.astro";
+import ProjectModal from "@/components/ProjectModal.astro";
 
-interface Tag {
-    // Nombre de la etiqueta
-    name: string;
-    // Clase de color de la etiqueta
-    class: string;
-    // Clase de color del icono
-    classIcon?: string;
-    // Icono de la etiqueta
-    icon: any;
-}
+import { PROJECTS } from "@/data";
+import { DISPLAY_LIMITS, LINK_TEXTS } from "@/config/site";
 
-interface Project {
-    // Título del proyecto
-    title: string;
-    // Descripción del proyecto
-    description: string;
-    // Este proyecto fue desarrollado en: (Nombre del Trabajo, Freelance, Personal, etc)
-    work?: string;
-    // Id del trabajo para enlazar con la sección de experiencia
-    workId?: string;
-    // Enlace al proyecto
-    link?: string;
-    // Enlace al repositorio del proyecto
-    github?: string;
-    // Imagen del proyecto
-    image: string;
-    // Etiquetas de tecnologías utilizadas
-    tags: Tag[];
-}
-
-const TAGS = {
-    AWS: {
-        name: "AWS",
-        class: "bg-[#232F3E] text-white",
-        icon: AWS,
-    },
-    TAILWIND: {
-        name: "Tailwind CSS",
-        class: "bg-[#003159] text-white",
-        icon: Tailwind,
-    },
-    REACT: {
-        name: "React",
-        class: "bg-[#227086] text-white",
-        classIcon: "text-[#00D8FF]",
-        icon: React,
-    },
-    REACT_NATIVE: {
-        name: "React Native",
-        class: "bg-[#227086] text-white",
-        classIcon: "text-[#61DAFB]",
-        icon: React,
-    },
-    MICRONAUT: {
-        name: "Micronaut",
-        class: "bg-[#000] text-white",
-        icon: Micronaut,
-    },
-    VERCEL: {
-        name: "Vercel",
-        class: "bg-[#000] text-white",
-        icon: Vercel,
-    },
-    FLUTTER: {
-        name: "Flutter",
-        class: "bg-[#002C52] text-white",
-        icon: Flutter,
-    },
-    GRAPHQL: {
-        name: "GraphQL",
-        class: "bg-[#E535AB] text-white",
-        icon: GraphQL,
-    },
-    NESTJS: {
-        name: "NestJS",
-        class: "bg-[#661226] text-white",
-        icon: NestJS,
-    },
-    FIREBASE: {
-        name: "Firebase",
-        class: "bg-[#775C08] text-white",
-        icon: Firebase,
-    },
-    SENTRY: {
-        name: "Sentry",
-        class: "bg-[#362D59] text-white",
-        icon: Sentry,
-    },
-    FIGMA: {
-        name: "Figma",
-        class: "bg-[#5C1E0B] text-white",
-        icon: Figma,
-    },
-    MARIA_DB: {
-        name: "MariaDB",
-        class: "bg-[#003545] text-white",
-        icon: MariaDB,
-    },
-    MONGODB: {
-        name: "MongoDB",
-        class: "bg-[#13AA52] text-white",
-        icon: MongoDB,
-    },
-    SQLITE: {
-        name: "SQLite",
-        class: "bg-[#003B57] text-white",
-        icon: SQLite,
-    },
-    STRIPE: {
-        name: "Stripe",
-        class: "bg-[#6772E5] text-white",
-        icon: Stripe,
-    },
-};
-
-const PROJECTS: Project[] = [
-    {
-        title: "TrackCash App",
-        description:
-            "Aplicación móvil para la administración y control de las bolsas de valores utilizadas en los vuelos, la cual te permite registrar bolsas.",
-        work: "IDEO Software",
-        workId: "ideo",
-        link: "https://play.google.com/store/apps/details?id=com.ideosoftware.trackcash",
-        image: "/projects/trackcash.webp",
-        tags: [TAGS.REACT_NATIVE, TAGS.SQLITE, TAGS.FIREBASE, TAGS.SENTRY, TAGS.MICRONAUT, TAGS.AWS],
-    },
-    {
-        title: "TrackCash Web",
-        description:
-            "Aplicación web para la administración de la información registrada en la aplicación móvil TrackCash, la cual te permite visualizar, editar, filtrar y exportar la información.",
-        work: "IDEO Software",
-        workId: "ideo",
-        image: "/projects/trackcash-web.webp",
-        tags: [TAGS.REACT, TAGS.SENTRY, TAGS.MICRONAUT, TAGS.MARIA_DB, TAGS.AWS],
-    },
-    {
-        title: "Casa-U App",
-        description: "Aplicación móvil estilo AirBnB",
-        work: "Freelance",
-        image: "/projects/casau-app.webp",
-        tags: [TAGS.FLUTTER, TAGS.STRIPE, TAGS.NESTJS, TAGS.MARIA_DB, TAGS.FIGMA],
-    },
-    {
-        title: "Starlight Economy Web",
-        description:
-            "Página web del bot de Discord Starlight Economy, la cual te permite visualizar la información de los usuarios, servidores y comandos, además de poder invitar al bot a tu servidor y configurar el bot dentro de tu servidor.",
-        work: "Personal",
-        link: "https://starlight-economy.vercel.app/",
-        github: "https://github.com/StarArmyDev/sl-economy-web",
-        image: "/projects/sl-economy-web.webp",
-        tags: [TAGS.REACT, TAGS.MONGODB, TAGS.GRAPHQL, TAGS.VERCEL],
-    },
-];
+const LIMIT = DISPLAY_LIMITS.projects;
 ---
 
 <h2 class='text-2xl font-semibold flex gap-x-3 mb-2 items-center text-gray-900 dark:text-white'>
@@ -179,19 +20,41 @@ const PROJECTS: Project[] = [
     Proyectos
 </h2>
 
-<div class='grid gap-4 mt-4'>
+<div class='grid gap-4 mt-4' id='projects-grid'>
     {
-        PROJECTS.map((project) => (
-            <article class='flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0'>
+        PROJECTS.map((project, i) => (
+            <article
+                class={`flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0 transition-all duration-300 ${i >= LIMIT ? "hidden project-hidden" : ""}`}
+                data-project-index={i}
+            >
                 <div class='w-full md:w-1/2'>
-                    <div class='relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50'>
-                        <img
-                            alt=''
-                            src={project.image}
+                    <div
+                        class='relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50 cursor-pointer'
+                        onclick={`openProjectModal(${JSON.stringify({
+                            title: project.title,
+                            description: project.description,
+                            work: project.work,
+                            image: project.image.src,
+                            tags: project.tags.map((t) => t.name),
+                            links: project.links?.map((l) => ({
+                                href: l.href,
+                                text: !l.type ? LINK_TEXTS.preview : LINK_TEXTS[l.type],
+                            })),
+                        })})`}
+                    >
+                        <Image
                             alt={project.title}
+                            src={project.image}
+                            height={500}
+                            width={500}
                             class='object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105'
                             loading='lazy'
                         />
+                        <div class='absolute inset-0 group-hover:bg-black/60 transition-all duration-300 flex items-center justify-center'>
+                            <span class='text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-lg font-semibold'>
+                                Ver detalles
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class='w-full md:w-1/2 md:max-w-lg'>
@@ -210,7 +73,7 @@ const PROJECTS: Project[] = [
                             </span>
                         ))}
 
-                    <div class='mt-2 text-gray-700 dark:text-gray-400'>{project.description}</div>
+                    <div class='mt-2 text-gray-700 dark:text-gray-400'>{project.descriptionShort}</div>
 
                     <div class='flex flex-wrap mt-2'>
                         <ul class='flex flex-row mb-2 gap-x-2 flex-wrap'>
@@ -225,21 +88,49 @@ const PROJECTS: Project[] = [
                         </ul>
                     </div>
                     <footer class='flex items-end justify-start mt-4 gap-x-4'>
-                        {project.github && (
-                            <LinkButton href={project.github}>
-                                <GitHub class='size-6' />
-                                Code
+                        {project.links?.map((link) => (
+                            <LinkButton href={link.href}>
+                                {link.type === "playstore" ? (
+                                    <PlayStore class='size-4' />
+                                ) : link.type === "appstore" ? (
+                                    <AppStore class='size-4' />
+                                ) : link.type === "github" ? (
+                                    <GitHub class='size-4' />
+                                ) : (
+                                    <Link class='size-4' />
+                                )}
+                                {!link.type ? LINK_TEXTS.preview : LINK_TEXTS[link.type]}
                             </LinkButton>
-                        )}
-                        {project.link && (
-                            <LinkButton href={project.link}>
-                                <Link class='size-4' />
-                                Preview
-                            </LinkButton>
-                        )}
+                        ))}
                     </footer>
                 </div>
             </article>
         ))
     }
 </div>
+
+{
+    PROJECTS.length > LIMIT && (
+        <button
+            id='show-more-projects'
+            class='mt-6 w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700'
+        >
+            Ver más proyectos
+        </button>
+    )
+}
+
+<ProjectModal />
+
+<script>
+    const showMoreBtn = document.getElementById("show-more-projects");
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener("click", () => {
+            const hiddenProjects = document.querySelectorAll(".project-hidden");
+            hiddenProjects.forEach((project) => {
+                project.classList.remove("hidden", "project-hidden");
+            });
+            showMoreBtn.style.display = "none";
+        });
+    }
+</script>

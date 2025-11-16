@@ -1,18 +1,35 @@
 ---
+import { marked } from "marked";
+
 interface Props {
     id: string;
     period: string;
     title: string;
     isLastest?: boolean;
     subtitle?: string;
+    descriptionShort: string;
     description: string;
     badgs?: string[];
+    isHidden?: boolean;
 }
 
-const { id, title, subtitle, description, period, isLastest, badgs } = Astro.props;
+const { id, title, subtitle, descriptionShort, description, period, isLastest, badgs, isHidden } = Astro.props;
+const uniqueId = `timeline-${id}`;
+
+marked.setOptions({
+    gfm: true, // GitHub Flavored Markdown
+    breaks: true, // Convertir \n en <br>
+});
+
+// Renderizar description como Markdown
+const descriptionHTML = await marked.parse(description);
 ---
 
-<li id={id} class='mb-10 ms-6'>
+<li
+    id={id}
+    class={`mb-10 ms-6 transition-all duration-300 ${isHidden ? "hidden" : ""}`}
+    data-hidden={isHidden ? "true" : "false"}
+>
     <div
         class='absolute w-3 h-3 bg-gray-400 rounded-full mt-1.5 -start-1.5 border border-gray-500 dark:border-gray-900 dark:bg-gray-700'
     >
@@ -21,40 +38,97 @@ const { id, title, subtitle, description, period, isLastest, badgs } = Astro.pro
     <time class='block mb-2 text-sm font-normal leading-none text-gray-600 dark:text-gray-500'>{period}</time>
 
     <!-- Titulo -->
-    <h3 class='flex items-center mb-1 text-lg font-semibold text-sky-900 dark:text-sky-300'>
-        {title}
-        {
-            isLastest && (
-                <span class='bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3'>
-                    Latest
-                </span>
-            )
-        }
-    </h3>
+    <div class='flex items-center justify-between mb-1'>
+        <h3 class='flex items-center text-lg font-semibold text-sky-900 dark:text-sky-300'>
+            {title}
+            {
+                isLastest && (
+                    <span class='bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ms-3'>
+                        Latest
+                    </span>
+                )
+            }
+        </h3>
+        <button
+            type='button'
+            class='toggle-details text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-transform duration-200'
+            data-target={uniqueId}
+            aria-expanded='false'
+        >
+            <svg class='w-5 h-5 transform transition-transform' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'></path>
+            </svg>
+        </button>
+    </div>
 
     <!-- Subtitulo -->
     <h4 class='mb-2 text-base font-bold text-gray-500 dark:text-gray-400'>
         {subtitle}
     </h4>
 
-    <!-- Descripción -->
+    <!-- Descripción corta -->
     <p class='mb-4 text-base font-normal text-gray-500 dark:text-gray-400 text-balance'>
-        {description}
+        {descriptionShort}
     </p>
 
-    <!-- Badges -->
-    {
-        badgs && (
-            <div class='mb-4 flex flex-wrap gap-2 pr-5'>
-                {badgs.map((badg) => (
-                    <span class='bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-gray-900 dark:text-gray-400'>
-                        {badg}
-                    </span>
-                ))}
-            </div>
-        )
-    }
+    <!-- Contenido colapsable -->
+    <div id={uniqueId} class='details-content max-h-0 overflow-hidden transition-all duration-300'>
+        <!-- Descripción renderizada como Markdown -->
+        <div
+            class='markdown-content mb-4 text-base font-normal text-gray-500 dark:text-gray-400'
+            set:html={descriptionHTML}
+        />
 
-    <!-- Otros -->
-    <slot />
+        <!-- Badges con scroll horizontal en 2 filas -->
+        {
+            badgs && badgs.length > 0 && (
+                <div class='mb-4 pr-5'>
+                    <div class='relative'>
+                        <div class='overflow-x-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent pb-2'>
+                            <div
+                                class='grid grid-flow-col auto-cols-max gap-2'
+                                style='grid-template-rows: repeat(2, minmax(0, 1fr));'
+                            >
+                                {badgs.map((badg) => (
+                                    <span class='bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded dark:bg-gray-900 dark:text-gray-400 whitespace-nowrap'>
+                                        {badg}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+
+        <!-- Otros -->
+        <slot />
+    </div>
 </li>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const toggleButtons = document.querySelectorAll(".toggle-details");
+
+        toggleButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const targetId = button.getAttribute("data-target");
+                const content = document.getElementById(targetId!);
+                const svg = button.querySelector("svg");
+                const isExpanded = button.getAttribute("aria-expanded") === "true";
+
+                if (content && svg) {
+                    if (isExpanded) {
+                        content.style.maxHeight = "0";
+                        svg.style.transform = "rotate(0deg)";
+                        button.setAttribute("aria-expanded", "false");
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        svg.style.transform = "rotate(180deg)";
+                        button.setAttribute("aria-expanded", "true");
+                    }
+                }
+            });
+        });
+    });
+</script>

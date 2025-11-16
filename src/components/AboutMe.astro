@@ -1,8 +1,17 @@
 ---
-import ProfileCheck from "./icons/ProfileCheck.astro";
 import { Image } from "astro:assets";
 
+import ProfileCheck from "./icons/ProfileCheck.astro";
+import ImageMe from "../assets/me.webp";
+
 const personalImageAlt = "Erick Flores";
+
+const interests = [
+    { icon: "🎮", text: "Videojuegos" },
+    { icon: "🎬", text: "Ciencia Ficción" },
+    { icon: "🎵", text: "Música Cristiana" },
+    { icon: "💻", text: "Programación" },
+];
 ---
 
 <h2 class='flex items-center mb-6 text-3xl font-semibold gap-x-8 text-black/80 dark:text-white'>
@@ -10,35 +19,78 @@ const personalImageAlt = "Erick Flores";
     Sobre mí
 </h2>
 
-<article class='flex flex-col items-center justify-center gap-8 text-gray-700 dark:text-gray-300 md:flex-row'>
-    <div
-        class='[&>p]:mb-4 [&>p>strong]:text-yellow-500 dark:[&>p>strong]:text-yellow-100 [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-1'
-    >
-        <p>
-            Me llamo Erick, pero mis amigos me dicen Davicho, Soy Desarrollador Front-End, principalmete en <strong
-                >ReactJS, React-Native y Flutter</strong
-            >, pero tego conocimientos en Back-End y otras tecnologías como Grails, Micronaut y NestJS con lenguajes
-            como <strong>TypeScript, Dart y Java</strong>.
-        </p>
+<article class='flex flex-col gap-8'>
+    <!-- Intro Section -->
+    <div class='flex flex-col items-center justify-center gap-8 text-gray-700 dark:text-gray-300 md:flex-row'>
+        <div
+            class='[&>p]:mb-4 [&>p>strong]:text-yellow-500 dark:[&>p>strong]:text-yellow-100 [&>p>strong]:font-normal [&>p>strong]:font-mono text-pretty order-2 md:order-1'
+        >
+            <p>
+                Me llamo Erick, pero mis amigos me dicen Davicho. Soy Desarrollador Front-End, principalmente en <strong
+                    >ReactJS, React-Native y Flutter</strong
+                >, pero tengo conocimientos en Back-End y otras tecnologías como Grails, Micronaut y NestJS con
+                lenguajes como <strong>TypeScript, Dart y Java</strong>.
+            </p>
 
-        <p>
-            Comencé mi interés por la programación como hobby pero me gustó mucho crear cosas que quise ir por más y es
-            donde esto parado actualmente, creando experiencias únicas para los usuarios.
-        </p>
+            <p>
+                Comencé mi interés por la programación como hobby pero me gustó mucho crear cosas que quise ir por más y
+                es donde estoy parado actualmente, creando experiencias únicas para los usuarios.
+            </p>
 
-        <p>
-            En mi tiempo libre me gusta jugar videojuegos, ver series y películas de ciencia ficción, y la múscia con
-            artistas como <strong>for King & Country, Newsboys, Alex Zurdo, Kike Pavón,</strong> entre otros. Me concidero
-            fan de <strong>la saga de Halo</strong>, sobre todo de la historia y su lore extendido.
-        </p>
+            <p>
+                En mi tiempo libre me gusta jugar videojuegos, ver series y películas de ciencia ficción, y la música
+                con artistas como <strong>for King & Country, Newsboys, Alex Zurdo, Kike Pavón,</strong> entre otros. Me
+                considero fan de <strong>la saga de Halo</strong>, sobre todo de su historia y lore extendido.
+            </p>
+        </div>
+
+        <Image
+            width='200'
+            height='200'
+            src={ImageMe}
+            alt={personalImageAlt}
+            class='order-1 object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20'
+            style='object-position: 50% 50%'
+        />
     </div>
 
-    <Image
-        width='200'
-        height='200'
-        src='/me.webp'
-        alt={personalImageAlt}
-        class='order-1 object-cover w-64 h-full p-1 md:order-2 rotate-3 lg:p-2 lg:w-64 aspect-square rounded-2xl bg-black/20 dark:bg-yellow-500/5 ring-1 ring-black/70 dark:ring-white/20'
-        style='object-position: 50% 50%'
-    />
+    <!-- Interests Section -->
+    <div class='mt-8'>
+        <h3 class='text-2xl font-semibold mb-6 text-gray-900 dark:text-white'>Intereses & Hobbies</h3>
+        <div class='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+            {
+                interests.map((interest) => (
+                    <div class='flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors'>
+                        <span class='text-3xl'>{interest.icon}</span>
+                        <span class='text-sm font-medium text-gray-700 dark:text-gray-300'>{interest.text}</span>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div
+        class='mt-8 p-6 rounded-2xl bg-gradient-to-r from-sky-500/10 to-cyan-500/10 dark:from-sky-500/20 dark:to-cyan-500/20 border border-sky-500/20 dark:border-sky-500/30'
+    >
+        <h3 class='text-xl font-semibold mb-3 text-gray-900 dark:text-white'>¿Trabajamos juntos?</h3>
+        <p class='text-gray-700 dark:text-gray-300 mb-4'>
+            Estoy disponible para proyectos freelance y oportunidades de colaboración. Si tienes una idea o proyecto en
+            mente, ¡hablemos!
+        </p>
+        <a
+            href='mailto:davichostar@protonmail.com'
+            class='inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white bg-sky-600 hover:bg-sky-700 rounded-lg transition-colors'
+        >
+            <svg class='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+                ></path>
+            </svg>
+            Enviar correo
+        </a>
+    </div>
 </article>

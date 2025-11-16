@@ -1,5 +1,5 @@
 ---
-import "@fontsource-variable/onest";
+//import "@fontsource-variable/onest";
 
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -13,7 +13,7 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang='en' class='dark'>
+<html lang='en'>
     <head>
         <meta charset='UTF-8' />
         <meta name='description' content={description} />
@@ -21,8 +21,35 @@ const { title, description } = Astro.props;
         <link rel='icon' type='image/svg+xml' href='/favicon.ico' />
         <meta name='generator' content={Astro.generator} />
         <title>{title}</title>
+
+        <!-- Script de tema que se ejecuta ANTES de renderizar para evitar flash -->
+        <script is:inline>
+            // Obtener tema guardado o usar modo claro por defecto
+            const getThemePreference = () => {
+                if (typeof localStorage !== 'undefined') {
+                    const stored = localStorage.getItem("theme");
+                    if (stored) {
+                        console.log('Theme from localStorage:', stored);
+                        return stored;
+                    }
+                }
+                // Por defecto, usar modo claro (cambia a 'dark' si prefieres oscuro)
+                console.log('No theme stored, using default: light');
+                return "light";
+            };
+
+            // Aplicar tema inmediatamente
+            const theme = getThemePreference();
+            console.log('Applying theme:', theme);
+            
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
+        </script>
     </head>
-    <body class='relative h-full w-full bg-[#E2E2E2] dark:bg-slate-950'>
+    <body class='relative h-full w-full bg-[#E2E2E2] dark:bg-slate-800'>
         <div
             class='absolute -z-10 bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]'
         >

@@ -1,54 +1,219 @@
-# Astro Starter Kit: Basics
+# Portafolio Dev - Guía de Uso
 
-```sh
-npm create astro@latest -- --template basics
+## 🧞 Commandos
+
+Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal:
+
+| Commando                  | Acción                                           |
+| :------------------------ | :----------------------------------------------- |
+| `bun install`             | Installs dependencies                            |
+| `bun run dev`             | Starts local dev server at `localhost:4321`      |
+| `bun run build`           | Build your production site to `./dist/`          |
+| `bun run preview`         | Preview your build locally, before deploying     |
+| `bun run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `bun run astro -- --help` | Get help using the Astro CLI                     |
+
+---
+
+# 📁 Estructura del Proyecto
+
+Este portafolio está organizado para facilitar la edición del contenido sin tocar el código de los componentes.
+
+## 🗂️ Estructura de Carpetas
+
 ```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
 /
-├── public/
-│   └── favicon.svg
+├── public/             # Archivos estáticos
+│   ├── favicon.svg     # Icono para navegadores modernos
+│   └── favicon.ico     # Icono para navegadores antiguos
 ├── src/
-│   ├── components/
+│   ├── assets/         # Imágenes y recursos
+│   │   └── projects/   # Imágenes de proyectos
+│   ├── components/     # Componentes de Astro
 │   │   └── Card.astro
-│   ├── layouts/
+│   ├── config/         # Configuración general
+│   ├── data/           # Contenido editable (proyectos, experiencia)
+│   ├── layouts/        # Layouts principales
 │   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
+│   ├── pages/          # Páginas del sitio
+│   │    └── index.astro
+│   ├── styles/        # Estilos globales (Tailwind CSS)
+│   └── types/          # Interfaces TypeScript
+├── astro.config.mjs
+├── tailwind.config.cjs
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## ✏️ Cómo Editar el Contenido
 
-Any static assets, like images, can be placed in the `public/` directory.
+### 1. **Agregar/Editar Proyectos**
 
-## 🧞 Commands
+**Archivo:** `src/data/projects.ts`
 
-All commands are run from the root of the project, from a terminal:
+```typescript
+{
+    title: "Mi Nuevo Proyecto",
+    description: "Descripción del proyecto...",
+    work: "Freelance", // o "Personal", "Nombre de Empresa"
+    workId: "id_experiencia", // (opcional) enlaza con Timeline
+    links: [
+        { href: "https://github.com/...", type: "github" },
+        { href: "https://play.google.com/...", type: "playstore" },
+    ],
+    image: miProyectoImagen, // importar arriba
+    tags: [TAGS.REACT, TAGS.FIREBASE, ...],
+}
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### 2. **Agregar/Editar Experiencia Laboral**
 
-## 👀 Want to learn more?
+**Archivo:** `src/data/experience.ts`
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```typescript
+{
+    id: "mi-trabajo",
+    period: "Enero 2025 - Actualidad",
+    title: "Desarrollador Senior",
+    subtitle: "Mi Empresa",
+    descriptionShort: "Resumen corto...",
+    description: `
+        ### Soporta Markdown completo
+        
+        - Lista de items
+        - **Negritas** y *cursivas*
+        
+        > Citas
+    `,
+    badgs: ["React", "Node.js", "AWS"],
+    link: "https://empresa.com", // (opcional)
+}
+```
+
+### 3. **Agregar Nueva Tecnología (Tag)**
+
+**Archivo:** `src/data/tags.ts`
+
+```typescript
+NEXTJS: {
+    name: "Next.js",
+    class: "bg-black text-white",
+    icon: NextJS, // importar arriba
+},
+```
+
+### 4. **Cambiar Configuración General**
+
+**Archivo:** `src/config/site.ts`
+
+```typescript
+export const DISPLAY_LIMITS = {
+    projects: 3,      // Proyectos visibles inicialmente
+    experience: 4,    // Experiencias visibles inicialmente
+};
+```
+
+---
+
+## 🎨 Cambiar Colores de las Tecnologías
+
+**Archivo:** `src/data/tags.ts`
+
+Cada tag tiene una propiedad `class` con clases de Tailwind:
+
+```typescript
+REACT: {
+    name: "React",
+    class: "bg-[#227086] text-white",  // 👈 Cambia esto
+    classIcon: "text-[#00D8FF]",       // 👈 Color del icono (opcional)
+    icon: React,
+},
+```
+
+Puedes usar:
+- Colores hexadecimales: `bg-[#FF5733]`
+- Colores de Tailwind: `bg-blue-500`
+- Combinaciones: `bg-gradient-to-r from-blue-500 to-purple-600`
+
+---
+
+## 📝 Markdown en Descripciones
+
+Las descripciones de experiencia laboral soportan **Markdown completo**:
+
+### Elementos soportados:
+
+```markdown
+### Encabezados (H3, H4, H5)
+
+**Texto en negrita**
+*Texto en cursiva*
+`código inline`
+
+- Lista con viñetas
+- Item 2
+  - Sub-item
+
+1. Lista numerada
+2. Item 2
+
+[Enlaces](https://ejemplo.com)
+
+> Citas o notas importantes
+
+---
+Separadores horizontales
+```
+
+---
+
+## 🔧 Cambiar Límites de Visualización
+
+**Archivo:** `src/config/site.ts`
+
+```typescript
+export const DISPLAY_LIMITS: DisplayLimits = {
+    projects: 3,      // Muestra 3 proyectos inicialmente
+    experience: 4,    // Muestra 4 experiencias inicialmente
+};
+```
+
+Si cambias estos valores:
+- **Menor número** = Menos items visibles, aparece botón "Ver más" antes
+- **Mayor número** = Más items visibles desde el inicio
+
+---
+
+## 📸 Agregar Nuevas Imágenes de Proyectos
+
+1. Coloca la imagen en: `src/assets/projects/`
+2. Formato recomendado: `.webp` (mejor compresión)
+3. Importa en `src/data/projects.ts`:
+
+```typescript
+import miNuevoProyecto from "@/assets/projects/mi-proyecto.webp";
+```
+
+4. Usa en el proyecto:
+
+```typescript
+{
+    title: "Mi Proyecto",
+    image: miNuevoProyecto, // 👈 Aquí
+    // ...
+}
+```
+
+---
+
+## 📖 Documentación de Referencia
+
+- **Astro**: https://docs.astro.build
+- **Tailwind CSS**: https://tailwindcss.com/docs
+- **Markdown (marked)**: https://marked.js.org
+- **TypeScript**: https://www.typescriptlang.org/docs
+
+---
+
+¡Feliz edición! 🎉
